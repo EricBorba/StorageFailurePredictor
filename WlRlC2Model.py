@@ -18,9 +18,6 @@ import json
 import math
 import datetime as dt
 import pymongo as pym
-from mongoengine import *
-import statsmodels
-%matplotlib inline
 
 
 
