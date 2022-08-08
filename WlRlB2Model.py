@@ -69,12 +69,22 @@ graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SS
 
 plt.savefig('B21.png')
 
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
+
 # %%
 graph = sns.scatterplot(x = "w_r_d", y = 'r_sectors', palette = 'deep', hue='app', hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'], data = result, alpha=0.1)
 
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 
 plt.savefig('B22.png')
+
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
 
 # %%
 graph = sns.scatterplot(x = "w_r_d", y = 'r_sectors', size="app", sizes=(1, 50), palette = 'deep', hue='app', hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'],data = result, alpha=0.1)
@@ -83,20 +93,40 @@ graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SS
 
 plt.savefig('B23.png')
 
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
+
 # %%
 graph = sns.lineplot(data=result, x="w_r_d", y="r_sectors", hue="app",hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'], estimator=np.mean, ci=90, markers=True, err_style="bars")
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B24.png')
+
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
 
 # %%
 graph = sns.lineplot(data=result, x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'],estimator=np.mean, ci=90, markers=["o", "x", "+", "D", "v", "1", "s"])
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B25.png')
 
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
+
 # %%
 graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'],data=result, markers=["o", "x", "+", "D", "v", "1", "s", "<", ">"], palette="Set1", x_estimator=np.mean, x_ci="ci", ci=60, fit_reg=True)
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B26.png')
+
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
 
 # %%
 bin=np.arange(0,maxWearValue,150) #[150,300,450,600,750,900,1050,1200,1350]
@@ -104,11 +134,21 @@ graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B27.png')
 
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
+
 # %%
 bin=np.arange(0,maxWearValue,150)
 graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'],data=result, palette="Set1", markers=["o", "x", "+", "D", "v", "1", "s", "<", ">"], x_estimator=np.mean, x_ci="ci", ci=90, fit_reg=True, x_bins=bin, truncate=True, scatter=True, logx=True)
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B28.png')
+
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
 
 # %%
 bin=np.arange(0,maxWearValue,100)
@@ -116,11 +156,21 @@ graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B29.png')
 
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
+
 # %%
 bin=np.arange(0,maxWearValue,50)
 graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'],data=result, palette="Set1", markers=["o", "x", "+", "D", "v", "1", "s", "<", ">"], x_estimator=np.mean, x_ci="ci", ci=90, fit_reg=True, x_bins=bin, truncate=True)
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B210.png')
+
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
 
 # %%
 bin=np.arange(0,maxWearValue,25)    
@@ -128,11 +178,21 @@ graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B211.png')
 
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
+
 # %%
 bin=np.arange(0,maxWearValue,25)
 graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'],data=result, palette="Set1", markers=["o", "x", "+", "D", "v", "1", "s", "<", ">"], x_estimator=np.mean, x_ci="ci", x_bins=bin, ci=None, fit_reg=False, truncate=True, scatter=True)
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B212.png')
+
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
 
 # %%
 bin=np.arange(0,maxWearValue,25)
@@ -140,8 +200,18 @@ graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app", hue_order=['none','RM','
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B213.png')
 
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
+
 # %%
 bin=np.arange(0,maxWearValue,25)
 graph = sns.lmplot(x="w_r_d", y="r_sectors", hue="app",hue_order=['none','RM','WS','WSM', 'WPS', 'NAS', 'DB', 'SS', 'DAE'], data=result, palette="Set1", markers=["o", "x", "+", "D", "v", "1", "s", "<", ">"], x_estimator=min, x_ci="ci", x_bins=bin, ci=None, fit_reg=False, truncate=True, scatter=True)
 graph.set(xlabel ="wear leveling", ylabel = "reallocated sectors", title ='B2 SSD Model')
 plt.savefig('B214.png')
+
+plt.figure().clear()
+plt.close()
+plt.cla()
+plt.clf()
