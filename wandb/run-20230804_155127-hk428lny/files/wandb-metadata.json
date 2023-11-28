@@ -1,0 +1,33 @@
+{
+    "os": "macOS-13.2.1-arm64-arm-64bit",
+    "python": "3.9.6",
+    "heartbeatAt": "2023-08-04T13:51:27.787656",
+    "startedAt": "2023-08-04T13:51:27.287938",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "WriteAnalB2Model-jvsc-a574d6f1-202d-4be1-836b-2a43592472148f827cce-316c-48a1-998e-871fe61a21b7.ipynb",
+    "root": "/Users/ericborba/Documents/Projetos/VCode/SMARTFilter",
+    "git": {
+        "remote": "https://github.com/EricBorba/SMARTFilter.git",
+        "commit": "b1b85a2f5a3ce775e4e7aa9d29dbfc7e1d845f4b"
+    },
+    "email": "eric.borba@gmail.com",
+    "host": "Erics-MacBook-Air.local",
+    "username": "ericborba",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "cpu_count": 8,
+    "cpu_count_logical": 8,
+    "disk": {
+        "total": 460.4317207336426,
+        "used": 11.952720642089844
+    },
+    "gpuapple": {
+        "type": "arm",
+        "vendor": "Apple"
+    },
+    "memory": {
+        "total": 16.0
+    }
+}
