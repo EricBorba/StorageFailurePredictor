@@ -1,0 +1,16 @@
+Model,Metric,Score
+Random Forest,MAE,172516.89363269962
+Random Forest,MSE,587630540985.568
+XGBoost,MAE,88087.625
+XGBoost,MSE,59610595000.0
+LSTM,MAE,3631141.8
+LSTM,MSE,32135862000000.0
+Random Forest,MAE,215298.55714886374
+Random Forest,MSE,1671359427985.424
+XGBoost,MAE,76637.01469292722
+XGBoost,MSE,72254150009.62799
+LSTM,MAE,3242023.2436352978
+LSTM,MSE,27005848852492.617
+Random Forest,Best Parameters,"{'bootstrap': True, 'ccp_alpha': 0.0, 'criterion': 'squared_error', 'max_depth': None, 'max_features': 1.0, 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 10, 'min_weight_fraction_leaf': 0.0, 'n_estimators': 50, 'n_jobs': None, 'oob_score': False, 'random_state': None, 'verbose': 0, 'warm_start': False}"
+XGBoost,Best Parameters,"{'objective': 'reg:squarederror', 'base_score': None, 'booster': None, 'callbacks': None, 'colsample_bylevel': None, 'colsample_bynode': None, 'colsample_bytree': None, 'early_stopping_rounds': None, 'enable_categorical': False, 'eval_metric': None, 'feature_types': None, 'gamma': None, 'gpu_id': None, 'grow_policy': None, 'importance_type': None, 'interaction_constraints': None, 'learning_rate': 0.1, 'max_bin': None, 'max_cat_threshold': None, 'max_cat_to_onehot': None, 'max_delta_step': None, 'max_depth': 9, 'max_leaves': None, 'min_child_weight': None, 'missing': nan, 'monotone_constraints': None, 'n_estimators': 150, 'n_jobs': None, 'num_parallel_tree': None, 'predictor': None, 'random_state': None, 'reg_alpha': None, 'reg_lambda': None, 'sampling_method': None, 'scale_pos_weight': None, 'subsample': None, 'tree_method': None, 'validate_parameters': None, 'verbosity': None}"
+LSTM,Best Parameters,{'Learning Rate': 0.01}
