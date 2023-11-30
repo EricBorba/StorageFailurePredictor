@@ -1,16 +1,22 @@
 Model,Metric,Score
-Random Forest,MAE,8.751546467883303e-05
-Random Forest,MSE,3.645206461724473e-08
+Random Forest,MAE,8.754247803343629e-05
+Random Forest,MSE,4.503804957147727e-08
+Random Forest,R-squared,0.9947605511758373
 XGBoost,MAE,0.00013002753
 XGBoost,MSE,5.055062e-08
-LSTM,MAE,0.0006172115
-LSTM,MSE,8.5679886e-07
-Random Forest,MAE,0.00012445533040869917
-Random Forest,MSE,8.254480732932029e-08
-XGBoost,MAE,0.0001332135581786316
-XGBoost,MSE,3.564216039142719e-08
-LSTM,MAE,0.003908557305628864
-LSTM,MSE,0.00112641516146886
-Random Forest,Best Parameters,"{'bootstrap': True, 'ccp_alpha': 0.0, 'criterion': 'squared_error', 'max_depth': None, 'max_features': 1.0, 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 2, 'min_weight_fraction_leaf': 0.0, 'n_estimators': 50, 'n_jobs': None, 'oob_score': False, 'random_state': None, 'verbose': 0, 'warm_start': False}"
+XGBoost,R-squared,0.9941192520721789
+LSTM,MAE,0.091882706
+LSTM,MSE,0.008462572
+LSTM,R-squared,-983.4833431270702
+Random Forest,MAE,0.000125491941678693
+Random Forest,MSE,9.299029081701493e-08
+Random Forest,R-squared,0.9881574663006568
+XGBoost,MAE,0.00013321355817863005
+XGBoost,MSE,3.564216039142935e-08
+XGBoost,R-squared,0.9954608864877788
+LSTM,MAE,0.0922264894373171
+LSTM,MSE,0.008528604125119939
+LSTM,R-squared,-1085.1379276556634
+Random Forest,Best Parameters,"{'bootstrap': True, 'ccp_alpha': 0.0, 'criterion': 'squared_error', 'max_depth': None, 'max_features': 1.0, 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 2, 'min_weight_fraction_leaf': 0.0, 'n_estimators': 100, 'n_jobs': None, 'oob_score': False, 'random_state': None, 'verbose': 0, 'warm_start': False}"
 XGBoost,Best Parameters,"{'objective': 'reg:squarederror', 'base_score': None, 'booster': None, 'callbacks': None, 'colsample_bylevel': None, 'colsample_bynode': None, 'colsample_bytree': None, 'early_stopping_rounds': None, 'enable_categorical': False, 'eval_metric': None, 'feature_types': None, 'gamma': None, 'gpu_id': None, 'grow_policy': None, 'importance_type': None, 'interaction_constraints': None, 'learning_rate': 0.1, 'max_bin': None, 'max_cat_threshold': None, 'max_cat_to_onehot': None, 'max_delta_step': None, 'max_depth': 6, 'max_leaves': None, 'min_child_weight': None, 'missing': nan, 'monotone_constraints': None, 'n_estimators': 150, 'n_jobs': None, 'num_parallel_tree': None, 'predictor': None, 'random_state': None, 'reg_alpha': None, 'reg_lambda': None, 'sampling_method': None, 'scale_pos_weight': None, 'subsample': None, 'tree_method': None, 'validate_parameters': None, 'verbosity': None}"
 LSTM,Best Parameters,{'Learning Rate': 0.01}
