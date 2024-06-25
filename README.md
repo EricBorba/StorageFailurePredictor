@@ -8,9 +8,6 @@ This repository contains Jupyter notebooks and a scientific paper on the analysi
   - `Comprehensive_Analysis_of_SSD_Failure_Effects_and_Performability_with_Machine_Learning.ipynb`
   - `DataProcessingAndExportingHDD.ipynb`
   - `MongoDB_Population.ipynb`
-- `paper/`: Contains the scientific paper in PDF format.
-  - `Performability_dynamic_MTTF__Arcs___CR_-3.pdf`
-- `data/`: Contains the data used in the notebooks (if applicable).
 
 ## Notebooks
 
