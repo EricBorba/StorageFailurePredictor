@@ -170,6 +170,8 @@ The scientific paper produced with the results from the notebooks was published 
 
 - **Title**: A Hierarchical Modeling Approach for Assessing the Reliability and Performability of Burst Buffers
 - **Abstract**: High availability is a crucial aspect of High-Performance Computing. Solid-state drives (SSD) offer peak bandwidth as node-local burst buffers. The limited write endurance of SSDs requires thorough investigation to ensure computational reliability. We propose a hierarchical model to evaluate the reliability and performability of burst buffers. We developed a machine-learning model to dynamically predict storage failures according to the wear caused by different applications. We also conducted an exploratory study to analyze the workload effects on SSD failures, and a representative dataset was adopted.
+- **Presentation**:
+The paper was presented by Eric Borba at the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS).
 
 ## Fundings
 
