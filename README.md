@@ -81,24 +81,53 @@ This dataset contains information regarding HDDs from a Backblaze data center, i
 
 ## Notebooks
 
-### MongoDB Population for SSD and HDD data
-This notebook demonstrates setting up and populating HDD data into MongoDB.
+### MongoDB Population for SSD and HDD Data
+
+This notebook demonstrates setting up MongoDB and populating SSD and HDD data into MongoDB.
 
 **Content**:
 1. **Setting Up MongoDB**:
-   - **MongoDB NoSQL**: Suitable for handling large datasets.
+   - **MongoDB NoSQL**: MongoDB is chosen for its ability to handle large datasets efficiently.
    - **Steps**:
-     - **Installation and Configuration**: Setting up MongoDB on a local or cloud server.
-     - **Schema Design**: Planning the structure of database collections and documents.
+     - **Installation and Configuration**: MongoDB can be set up on a local or cloud server. Ensure MongoDB is installed and configured properly.
+     - **Schema Design**: Plan the structure of database collections and documents to accommodate SSD and HDD data effectively.
+
 2. **Data Ingestion**:
-   - **ETL (Extract, Transform, Load)**: Extracting data from various sources, transforming it into the required format, and loading it into MongoDB.
-   - **Batch Processing**: Handling large volumes of data in batches to avoid performance bottlenecks.
-3. **Querying and Analysis**:
-   - **Powerful Querying**: MongoDB’s querying capabilities to analyze stored data.
-   - **Aggregation Framework**: Allows for complex data analysis and reporting.
-4. **Performance Optimization**:
-   - **Indexing**: Creating indexes on important fields to speed up queries.
-   - **Sharding**: Distributing data across multiple servers for better performance and reliability.
+   - **ETL (Extract, Transform, Load)**: Data is extracted from various sources, transformed as needed, and loaded into MongoDB collections.
+   - **Batch Processing**: Handle large volumes of SSD and HDD data in batches to optimize performance during ingestion.
+
+3. **MongoDB Operations and Data Management**:
+   - **Database Creation and Collection Management**:
+     - **Objective**: Create MongoDB database and manage collections.
+     - **Approach**: Use `use mydb` to create and switch to a database named `mydb`. Create collections using `db.createCollection`. View existing collections with `show collections`.
+   
+   - **Data Loading Using mongoimport**:
+     - **Objective**: Load data into MongoDB from a JSON file.
+     - **Approach**: Utilize `mongoimport` command-line tool to import SSD and HDD data into respective collections.
+   
+   - **Basic Data Querying**:
+     - **Objective**: Perform basic queries to retrieve SSD and HDD data from MongoDB collections.
+     - **Approach**: Use `db.collection.find()` to query documents based on specified criteria.
+
+   - **Counting Documents in a Collection**:
+     - **Objective**: Count the number of documents in a MongoDB collection.
+     - **Approach**: Implement `db.collection.count()` to get the document count in a collection.
+
+   - **Database Administration**:
+     - **Objective**: Perform basic administrative tasks for MongoDB databases.
+     - **Approach**: Use `db.dropDatabase()` to delete the current database (`mydb`).
+
+4. **Querying and Analysis**:
+   - **Powerful Querying**: Leverage MongoDB’s querying capabilities to analyze stored SSD and HDD data.
+   - **Aggregation Framework**: Utilize MongoDB's aggregation framework for complex data analysis and reporting.
+
+5. **Performance Optimization**:
+   - **Indexing**: Create indexes on important fields (e.g., serial numbers, timestamps) in SSD and HDD data collections to improve query performance.
+   - **Sharding**: Consider sharding MongoDB collections to distribute data across multiple servers for scalability and enhanced performance.
+
+### Summary
+
+This section outlines the setup of MongoDB for handling SSD and HDD data, including data population, basic operations, querying, and performance optimization strategies. These steps are crucial for effectively managing and analyzing large datasets in MongoDB.
 
 ### Data Processing and Exporting for HDD
 This notebook addresses HDD data processing and export methods.
@@ -122,11 +151,58 @@ This notebook addresses HDD data processing and export methods.
 
 ### Exploratory Analysis HDD
 
-### Exploratory Analysis SSD
-This notebook provides an in-depth exploration of SSD failures across various applications, analyzing failure rates and performability metrics such as AFR (Annualized Failure Rate) and MTTF (Mean Time To Failure).
+This notebook provides a detailed exploration of HDD failures across various dimensions, analyzing key metrics such as reallocated sectors, uncorrectable errors, command timeouts, and more. The analysis aims to understand the relationship between these metrics and the number of written blocks, and to calculate performability metrics such as AFR (Annualized Failure Rate) and MTTF (Mean Time To Failure).
+
+**Content**:
+1. **Investigation of Reallocated Sectors**
+    - **Objective**: Analyze the relationship between the number of blocks written and reallocated sectors.
+    - **Approach**:
+        - Group data by day to calculate the daily mean of blocks written and reallocated sectors.
+        - Plot reallocated sectors against blocks written to visualize the trend.
+
+2. **Investigation of Uncorrectable Errors**
+    - **Objective**: Examine the correlation between blocks written and uncorrectable errors.
+    - **Approach**:
+        - Group data by day to compute the daily mean of blocks written and uncorrectable errors.
+        - Plot uncorrectable errors against blocks written for analysis.
+
+3. **Investigation of Command Timeouts**
+    - **Objective**: Assess how command timeouts are affected by the number of blocks written.
+    - **Approach**:
+        - Group data by day to get the daily mean of blocks written and command timeouts.
+        - Remove outliers to ensure data integrity.
+        - Plot command timeouts against blocks written.
+
+4. **Investigation of Current Pending Sector Count**
+    - **Objective**: Determine the impact of written blocks on the current pending sector count.
+    - **Approach**:
+        - Group data by day to calculate the daily mean of blocks written and current pending sector count.
+        - Plot the current pending sector count against blocks written.
+
+5. **Investigation of Uncorrectable Sector Count**
+    - **Objective**: Analyze the effect of written blocks on the uncorrectable sector count.
+    - **Approach**:
+        - Group data by day to compute the daily mean of blocks written and uncorrectable sector count.
+        - Plot uncorrectable sector count against blocks written.
+
+6. **Analysis of HDD Failures by Blocks Written**
+    - **Objective**: Correlate the number of HDD failures with the number of blocks written.
+    - **Approach**:
+        - Load failure data for specific HDD models.
+        - Group data by day and calculate cumulative sums of disk IDs and blocks written.
+        - Plot the number of HDD failures against blocks written.
+
+7. **Correlation Analysis Between Failures and Written Blocks**
+    - **Objective**: Compute the correlation between the number of failures and the blocks written.
+    - **Approach**:
+        - Calculate cumulative sums of operational days and blocks written.
+        - Compute the correlation between these metrics for all HDD models.
 
 **Summary**:
-This exploratory analysis provides insights into SSD failures across various dimensions including application, model, flash technology, capacity, and lithography. By understanding these factors, we can improve SSD reliability and optimize their usage in different environments.
+This exploratory analysis offers comprehensive insights into HDD failures, focusing on various metrics and their relationship with the number of blocks written. By understanding these factors, we can improve HDD reliability and optimize their usage in different environments.
+
+### Exploratory Analysis SSD
+This notebook provides an in-depth exploration of SSD failures across various applications, analyzing failure rates and performability metrics such as AFR (Annualized Failure Rate) and MTTF (Mean Time To Failure).
 
 **Content**:
 1. **Investigation of SSDs by Application**
@@ -177,6 +253,9 @@ This exploratory analysis provides insights into SSD failures across various dim
   - Calculate total number of blocks written/read and median wearout indicators per application.
   - Determine the percentage of data written versus read and correlate with failure metrics.
 
+**Summary**:
+This exploratory analysis provides insights into SSD failures across various dimensions including application, model, flash technology, capacity, and lithography. By understanding these factors, we can improve SSD reliability and optimize their usage in different environments.
+
 ### Comprehensive Analysis of SSD Failure Effects and Performability with Machine Learning
 This notebook provides a comprehensive analysis of SSD failures and performability using machine learning techniques.
 
@@ -212,6 +291,35 @@ This notebook provides a comprehensive analysis of SSD failures and performabili
    - Comparison of different machine learning models and their performance metrics (e.g., Mean Absolute Error, Mean Squared Error, R2 Score).
 
 ### Utils
+
+This notebook provides a detailed analysis of system reliability metrics using Reliability Block Diagram (RBD) analysis and approximation of delay distributions for GekkoFS using phase-type distributions.
+
+**Content**:
+
+1. **Computing System Reliability Metrics using RBD Analysis**
+    - **Objective**: Calculate system Mean Time Between Failures (MTBF) and Mean Time To Repair (MTTR) metrics for different applications using RBD analysis in either series or parallel configuration.
+    - **Approach**:
+        - Define MTBF and MTTR values for different applications and the number of blocks in the system.
+        - For each application and configuration, compute the system MTBF and MTTR based on series or parallel configuration.
+        - Returns a DataFrame with application names, number of blocks, input MTBF and MTTR, and computed system metrics.
+
+2. **Approximating GekkoFS Delay Distributions**
+    - **Objective**: Approximate GekkoFS delay distribution using phase-type distributions based on moment matching technique.
+    - **Approach**:
+        - Calculate the relationship between mean (mu_d) and standard deviation (sigma_d) of the delay.
+        - Determine the appropriate phase-type distribution (single timing transition, Erlang, hypoexponential, or hyperexponential) based on this relationship.
+        - Returns a description of the phase-type distribution approximation or "Unknown distribution" if the distribution cannot be determined.
+
+3. **CSV Data Processing for Phase-Type Approximation**
+    - **Objective**: Process GekkoFS performance data from CSV files, calculate phase-type distributions and their parameters, and save the results into a CSV file.
+    - **Approach**:
+        - Load average write data and standard deviation data from CSV files.
+        - For each node and object size, calculate sigma_d (absolute standard deviation) and apply the phase-type approximation function.
+        - Extract and store parameters of the phase-type distribution.
+        - Create a DataFrame with the results and save it to a new CSV file.
+
+**Summary**:
+This notebook conducts detailed calculations of system reliability metrics using RBD analysis and approximates GekkoFS delay distributions using phase-type distributions based on moment matching. These methods provide deep insights into system reliability metrics and GekkoFS delay patterns, offering valuable insights to enhance system reliability and performance.
 
 ## Publication
 A scientific paper based on the results from the notebooks was authored by Eric Borba, Reza Salkhordeh, Salim Mimouni, Eduardo Tavares, Paulo Maciel, Hossein Asadi, and André Brinkmann. It was published in the Proceedings of the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS), held in Potsdam, Germany, from May 14th to 16th, 2024.
