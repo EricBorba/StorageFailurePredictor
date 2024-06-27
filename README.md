@@ -7,11 +7,14 @@
 4. [Process](#process)
 5. [Repository Structure](#repository-structure)
 6. [Notebooks](#notebooks)
+   - [MongoDB Population for SSD and HDD data](#mongodb-population)
+   - [Data Processing and Exporting for HDD](#data-processing-and-exporting-for-hdd)   
+   - [Exploratory Analysis HDD](#exploratory-analysis-hdd)
+   - [Exploratory Analysis SSD](#exploratory-analysis-ssd)
    - [Comprehensive Analysis of SSD Failure Effects and Performability with Machine Learning](#comprehensive-analysis-of-ssd-failure-effects-and-performability-with-machine-learning)
-   - [Data Processing and Exporting for HDD](#data-processing-and-exporting-for-hdd)
-   - [MongoDB Population for HDD Data](#mongodb-population-for-hdd-data)
+   - [Utils](#utils)
 7. [Installation and Execution](#installation-and-execution)
-8. [Scientific Paper](#scientific-paper)
+8. [Publication](#scientific-paper)
 9. [Datasets](#datasets)
    - [SSDs](#ssds)
    - [HDDs](#hdds)
@@ -72,8 +75,107 @@ This dataset contains information regarding HDDs from a Backblaze data center, i
   - `Comprehensive_Analysis_of_SSD_Failure_Effects_and_Performability_with_Machine_Learning.ipynb`
   - `DataProcessingAndExportingHDD.ipynb`
   - `MongoDB_Population.ipynb`
+  - `ExploratoryAnalysisHDD.ipynb`
+  - `ExploratoryAnalysisSSD.ipynb`
+  - `utils.ipynb`
 
 ## Notebooks
+
+### MongoDB Population for SSD and HDD data
+This notebook demonstrates setting up and populating HDD data into MongoDB.
+
+**Content**:
+1. **Setting Up MongoDB**:
+   - **MongoDB NoSQL**: Suitable for handling large datasets.
+   - **Steps**:
+     - **Installation and Configuration**: Setting up MongoDB on a local or cloud server.
+     - **Schema Design**: Planning the structure of database collections and documents.
+2. **Data Ingestion**:
+   - **ETL (Extract, Transform, Load)**: Extracting data from various sources, transforming it into the required format, and loading it into MongoDB.
+   - **Batch Processing**: Handling large volumes of data in batches to avoid performance bottlenecks.
+3. **Querying and Analysis**:
+   - **Powerful Querying**: MongoDB’s querying capabilities to analyze stored data.
+   - **Aggregation Framework**: Allows for complex data analysis and reporting.
+4. **Performance Optimization**:
+   - **Indexing**: Creating indexes on important fields to speed up queries.
+   - **Sharding**: Distributing data across multiple servers for better performance and reliability.
+
+### Data Processing and Exporting for HDD
+This notebook addresses HDD data processing and export methods.
+
+**Content**:
+1. **HDD Data Characteristics**:
+   - **Different Failure Mechanisms**: Comparison between HDD and SSD failures.
+   - **Key Factors**:
+     - **Mechanical Wear**: Moving parts are prone to wear and tear.
+     - **Environmental Factors**: Vibration, temperature, and humidity can impact HDD reliability.
+2. **Data Processing Techniques**:
+   - **Data Cleaning**: Removing noise and irrelevant data points.
+   - **Normalization**: Scaling data to ensure consistency in analysis.
+   - **Feature Selection**: Identifying important metrics like spindle speed, seek errors, and reallocated sectors.
+3. **Data Export Methods**:
+   - **Efficient Data Export**: Methods that ensure seamless integration with analytical tools.
+   - **Common Formats**: CSV, JSON, and database entries (e.g., MongoDB).
+4. **Tools and Frameworks**:
+   - **Python Libraries**: Utilization of pandas for data manipulation.
+   - **MongoDB**: Storing and querying large datasets efficiently.
+
+### Exploratory Analysis HDD
+
+### Exploratory Analysis SSD
+This notebook provides an in-depth exploration of SSD failures across various applications, analyzing failure rates and performability metrics such as AFR (Annualized Failure Rate) and MTTF (Mean Time To Failure).
+
+**Summary**:
+This exploratory analysis provides insights into SSD failures across various dimensions including application, model, flash technology, capacity, and lithography. By understanding these factors, we can improve SSD reliability and optimize their usage in different environments.
+
+**Content**:
+1. **Investigation of SSDs by Application**
+- **Objective**: Analyze SSD failure rates and performability metrics based on the application in which they are used.
+- **Approach**:
+  - Identify unique applications from the dataset.
+  - Calculate total SSDs, failed SSDs, AFR, and MTTF for each application.
+  - Differentiate between general SSDs and common SSDs across multiple datasets.
+
+2. **Investigation of SSDs Without Application Distinction**
+- **Objective**: Calculate overall failure rates and performability metrics without distinguishing between applications.
+- **Approach**:
+  - Aggregate data to compute general AFR and MTTF.
+  - Compare general failure statistics with application-specific statistics.
+
+3. **Investigation of AFR and MTTF per SSD Model for Each Application**
+- **Objective**: Assess the reliability of different SSD models within each application.
+- **Approach**:
+  - Merge datasets to associate SSD models with failure data.
+  - Loop through each application and SSD model to calculate AFR and MTTF.
+  - Compile statistics to identify models with higher failure rates.
+
+4. **Investigation of AFR and MTTF per SSD Flash Technology for Each Application**
+- **Objective**: Determine the impact of different flash technologies (e.g., MLC, 3D-TLC) on SSD reliability.
+- **Approach**:
+  - Classify SSD models based on flash technology.
+  - Group data by application and flash technology to calculate failure metrics.
+  - Compare AFR and MTTF across different technologies.
+
+5. **Investigation of AFR and MTTF per SSD Capacity for Each Application**
+- **Objective**: Analyze how SSD capacity affects failure rates and reliability.
+- **Approach**:
+  - Classify SSDs by capacity (e.g., 480GB, 1920GB).
+  - Group data by application and capacity to compute failure metrics.
+  - Assess the correlation between SSD capacity and failure rates.
+
+6. **Investigation of AFR and MTTF per SSD Lithography for Each Application**
+- **Objective**: Evaluate the reliability of SSDs based on their lithography.
+- **Approach**:
+  - Classify SSDs by lithography node (e.g., 20nm, 16nm).
+  - Group data by application and lithography to calculate AFR and MTTF.
+  - Identify lithographies with better reliability profiles.
+
+7. **Analysis of SSD Blocks Written/Read per Application**
+- **Objective**: Examine the relationship between data written/read and SSD reliability.
+- **Approach**:
+  - Merge datasets to include SMART attributes and SSD usage statistics.
+  - Calculate total number of blocks written/read and median wearout indicators per application.
+  - Determine the percentage of data written versus read and correlate with failure metrics.
 
 ### Comprehensive Analysis of SSD Failure Effects and Performability with Machine Learning
 This notebook provides a comprehensive analysis of SSD failures and performability using machine learning techniques.
@@ -109,44 +211,15 @@ This notebook provides a comprehensive analysis of SSD failures and performabili
    - Description of the architecture used in the predictive models.
    - Comparison of different machine learning models and their performance metrics (e.g., Mean Absolute Error, Mean Squared Error, R2 Score).
 
-### Data Processing and Exporting for HDD
-This notebook addresses HDD data processing and export methods.
+### Utils
 
-**Content**:
-1. **HDD Data Characteristics**:
-   - **Different Failure Mechanisms**: Comparison between HDD and SSD failures.
-   - **Key Factors**:
-     - **Mechanical Wear**: Moving parts are prone to wear and tear.
-     - **Environmental Factors**: Vibration, temperature, and humidity can impact HDD reliability.
-2. **Data Processing Techniques**:
-   - **Data Cleaning**: Removing noise and irrelevant data points.
-   - **Normalization**: Scaling data to ensure consistency in analysis.
-   - **Feature Selection**: Identifying important metrics like spindle speed, seek errors, and reallocated sectors.
-3. **Data Export Methods**:
-   - **Efficient Data Export**: Methods that ensure seamless integration with analytical tools.
-   - **Common Formats**: CSV, JSON, and database entries (e.g., MongoDB).
-4. **Tools and Frameworks**:
-   - **Python Libraries**: Utilization of pandas for data manipulation.
-   - **MongoDB**: Storing and querying large datasets efficiently.
+## Publication
+A scientific paper based on the results from the notebooks was authored by Eric Borba, Reza Salkhordeh, Salim Mimouni, Eduardo Tavares, Paulo Maciel, Hossein Asadi, and André Brinkmann. It was published in the Proceedings of the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS), held in Potsdam, Germany, from May 14th to 16th, 2024.
 
-### MongoDB Population for HDD Data
-This notebook demonstrates setting up and populating HDD data into MongoDB.
-
-**Content**:
-1. **Setting Up MongoDB**:
-   - **MongoDB NoSQL**: Suitable for handling large datasets.
-   - **Steps**:
-     - **Installation and Configuration**: Setting up MongoDB on a local or cloud server.
-     - **Schema Design**: Planning the structure of database collections and documents.
-2. **Data Ingestion**:
-   - **ETL (Extract, Transform, Load)**: Extracting data from various sources, transforming it into the required format, and loading it into MongoDB.
-   - **Batch Processing**: Handling large volumes of data in batches to avoid performance bottlenecks.
-3. **Querying and Analysis**:
-   - **Powerful Querying**: MongoDB’s querying capabilities to analyze stored data.
-   - **Aggregation Framework**: Allows for complex data analysis and reporting.
-4. **Performance Optimization**:
-   - **Indexing**: Creating indexes on important fields to speed up queries.
-   - **Sharding**: Distributing data across multiple servers for better performance and reliability.
+- **Title**: A Hierarchical Modeling Approach for Assessing the Reliability and Performability of Burst Buffers
+- **Abstract**: High availability is a crucial aspect of High-Performance Computing. Solid-state drives (SSD) offer peak bandwidth as node-local burst buffers. The limited write endurance of SSDs requires thorough investigation to ensure computational reliability. We propose a hierarchical model to evaluate the reliability and performability of burst buffers. We developed a machine-learning model to dynamically predict storage failures according to the wear caused by different applications. We also conducted an exploratory study to analyze the workload effects on SSD failures, and a representative dataset was adopted.
+- **Presentation**:
+The paper was presented by Eric Borba at the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS).
 
 ## Installation and Execution
 
@@ -164,14 +237,6 @@ This notebook demonstrates setting up and populating HDD data into MongoDB.
     ```
     jupyter notebook
     ```
-
-## Scientific Paper
-The scientific paper produced with the results from the notebooks was published by Eric Borba, Reza Salkhordeh, Salim Mimouni, Eduardo Tavares, Paulo Maciel, Hossein Asadi, and André Brinkmann in the Proceedings of the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS), held in Potsdam, Germany, from May 14th to 16th, 2024.
-
-- **Title**: A Hierarchical Modeling Approach for Assessing the Reliability and Performability of Burst Buffers
-- **Abstract**: High availability is a crucial aspect of High-Performance Computing. Solid-state drives (SSD) offer peak bandwidth as node-local burst buffers. The limited write endurance of SSDs requires thorough investigation to ensure computational reliability. We propose a hierarchical model to evaluate the reliability and performability of burst buffers. We developed a machine-learning model to dynamically predict storage failures according to the wear caused by different applications. We also conducted an exploratory study to analyze the workload effects on SSD failures, and a representative dataset was adopted.
-- **Presentation**:
-The paper was presented by Eric Borba at the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS).
 
 ## Fundings
 

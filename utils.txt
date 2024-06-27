@@ -1,0 +1,372 @@
+## Computing System Reliability Metrics using RBD (Reliability Block Diagram) Analysis
+
+import pandas as pd
+from decimal import Decimal, getcontext
+
+def calculate_reliability_block_diagram(mtbf_values, mttr_values, num_blocks_values, system_type, application_names):
+    """
+    Calculate system mean time between failures (MTBF) and mean time to repair (MTTR) metrics
+    for different applications using RBD analysis under either series or parallel configuration.
+
+    Parameters:
+    - mtbf_values: List of MTBF (Mean Time Between Failures) values for different applications.
+    - mttr_values: List of MTTR (Mean Time To Repair) values (currently supports single value).
+    - num_blocks_values: List of integers specifying number of blocks in the system configuration.
+    - system_type: Type of system configuration ('series' or 'parallel').
+    - application_names: List of application names corresponding to each MTBF value.
+
+    Returns:
+    - DataFrame containing computed metrics including Application Name, Number of Blocks, 
+      Input MTBF, Input MTTR, System MTBF, and System MTTR.
+
+    Raises:
+    - ValueError if system_type is not 'series' or 'parallel'.
+
+    Note:
+    - The system assumes all blocks are identical and configured either in series or parallel.
+    """
+
+    results = []
+
+    # Set decimal precision
+    getcontext().prec = 10
+
+    for mtbf, app_name in zip(mtbf_values, application_names):
+        for mttr in mttr_values:
+            for num_blocks in num_blocks_values:
+                mtbf_decimal = Decimal(mtbf)  # Convert mtbf to Decimal
+                mttr_decimal = Decimal(mttr)  # Convert mttr to Decimal
+
+                if system_type == 'series':
+                    system_mtbf = Decimal(1) / (sum([Decimal(1) / mtbf_decimal for _ in range(num_blocks)]))
+                    system_mttr = sum([mttr_decimal for _ in range(num_blocks)])
+                elif system_type == 'parallel':
+                    system_mtbf = (((Decimal(1)) / (Decimal(1) / mtbf_decimal)) * (sum([Decimal(1) / i for i in range(1, num_blocks + 1)])))
+                    system_mttr = mttr_decimal  # MTTR in parallel is the same as individual MTTR
+                else:
+                    raise ValueError("Invalid system_type. Use 'series' or 'parallel'.")
+                
+                results.append({
+                    'Application_Name': app_name,
+                    'Num_Blocks': num_blocks,
+                    'MTBF_Input': mtbf,
+                    'MTTR_Input': mttr,
+                    'System_MTBF': system_mtbf,
+                    'System_MTTR': system_mttr
+                })
+
+    return pd.DataFrame(results)
+
+# Define application names corresponding to each MTBF value
+application_names = ["none", 'RM', 'WSM', 'Gekko']  # Add more as needed
+
+# Load mtbf_values from CSV
+# mtbf_df = pd.read_csv('mtbf_values.csv')  # Replace 'mtbf_values.csv' with your file name
+# mtbf_values = mtbf_df['MTBF'].to_numpy()
+
+# mttf worst cases for None, RM, and WSM
+# 64GiB (16 threads * 4GiB) because this is the volume used in GekoFS paper (Total LBAs written, sector size=512bytes)
+mtbf_values = [987137.8067, 1157597.828, 2025612.832, 1066882,317]
+mttr_values = [1]
+num_blocks_values = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+
+# Specify system type ('series' or 'parallel')
+system_type = 'series'
+
+# Perform experiments and store results in a DataFrame
+metrics_result = calculate_reliability_block_diagram(mtbf_values, mttr_values, num_blocks_values, system_type, application_names)
+print(metrics_result)
+
+# Save results to CSV (change the filename for the correct algorithm name)
+metrics_result.to_csv('ExperimentalResults/RBDresultsRF.csv', index=False)
+
+
+## Approximating delay distributions of GekkoFS using phase-type distributions
+## based on moment matching technique and given mean (mu_d) and standard deviation (sigma_d).
+## This script was developed but not utilized for this article, as the requests were considered exponential.
+
+import numpy as np
+
+def phase_approximation(mu_d, sigma_d):
+    """
+    Approximates the delay distribution of GekkoFS using phase-type distributions based on
+    the moment matching technique.
+
+    Parameters:
+    - mu_d (float): Mean delay of GekkoFS.
+    - sigma_d (float): Standard deviation of delay of GekkoFS.
+
+    Returns:
+    - str: Description of the phase-type distribution approximation or "Unknown distribution"
+           if the distribution cannot be determined.
+    """
+    
+    cv_inv = mu_d / sigma_d
+
+    # Initialize gamma variable with a default value
+    gamma = 0
+
+
+    # Check for the case when mean and standard deviation are equal
+    if np.isclose(mu_d, sigma_d):
+        rate = 1/mu_d
+        return f"Single timing transition assumed: rate = {rate}"
+
+    # Check for Erlang subnet
+    if cv_inv.is_integer() and cv_inv != 1:
+        gamma = int(cv_inv**2)
+        rate_lambda = gamma / mu_d
+        return f"Erlang subnet: gamma = {gamma}, lambda = {rate_lambda}"
+
+    # Check for hypoexponential subnet (fixing the condition)
+    if mu_d > sigma_d:
+        gamma_lower = float(cv_inv**2 - 1)
+        gamma_upper = float(cv_inv**2)
+
+        print(gamma_lower)
+        print(gamma_upper)
+        
+        # Calculate gamma as an integer within the specified range
+        gamma = int(np.round(np.average([gamma_lower, gamma_upper])))
+        #gamma =2
+        mu_1 = (mu_d + np.sqrt(gamma * (gamma + 1) * sigma_d**2 - gamma * mu_d**2)) / (gamma + 1)
+        mu_2 = (gamma * mu_d - np.sqrt(gamma * (gamma + 1) * sigma_d**2 - gamma * mu_d**2)) / (gamma * (gamma + 1))
+        lambda_1 = 1 / mu_1
+        lambda_2 = 1 / mu_2
+        return f"Hypoexponential subnet: gamma = {gamma}, lambda_1 = {lambda_1}, lambda_2 = {lambda_2}, mu_1 = {mu_1}, mu_2 = {mu_2}"
+
+    # Check for hyperexponential subnet
+    if mu_d < sigma_d:
+        omega_1 = 2 * mu_d**2 / (mu_d**2 + sigma_d**2)
+        omega_2 = 1 - omega_1
+        rate_h = 2 * mu_d / (mu_d**2 + sigma_d**2)
+        return f"Hyperexponential subnet: omega_1 = {omega_1}, omega_2 = {omega_2}, lambda_h = {rate_h}"
+
+    return "Unknown distribution"
+
+# Example usage:
+mu_d_value = 348.17
+sigma_d_value = 3.8159432
+
+result = phase_approximation(mu_d_value, sigma_d_value)
+print(result)
+
+
+# Loading Gekko performance values, calculating phase-type distributions and parameters,
+# and saving the results into a CSV file.
+#
+# This script was developed but not adopted for this article as the requests were considered exponential.
+#
+# The phase_approximation function approximates delay distributions of GekkoFS using phase-type distributions
+# based on moment matching technique, given mean (mu_d) and standard deviation (sigma_d).
+
+import pandas as pd
+import numpy as np
+import math
+import re
+from itertools import zip_longest
+
+def phase_approximation(mu_d, sigma_d):
+    """
+    Approximates delay distributions of GekkoFS using phase-type distributions.
+    
+    Parameters:
+    - mu_d (float): Mean value.
+    - sigma_d (float): Standard deviation value.
+    
+    Returns:
+    - tuple: A tuple containing the distribution type and its parameters as a dictionary.
+    """
+
+    cv_inv = mu_d / sigma_d
+
+    # Initialize gamma variable with a default value
+    gamma = 0
+
+    # Check for the case when mean and standard deviation are equal
+    if np.isclose(mu_d, sigma_d):
+        rate = 1 / mu_d
+        return "Single timing transition assumed", {"rate": rate}
+
+    # Check for Erlang subnet
+    if cv_inv.is_integer() and cv_inv != 1:
+        gamma = int(cv_inv**2)
+        rate_lambda = gamma / mu_d
+        return "Erlang subnet", {"gamma": gamma, "lambda": rate_lambda}
+
+    # Check for hypoexponential subnet (fixing the condition)
+    if mu_d > sigma_d:
+        gamma_lower = float(cv_inv**2 - 1)
+        gamma_upper = float(cv_inv**2)
+
+        # Calculate gamma as an integer within the specified range
+        gamma = int(np.round(np.average([gamma_lower, gamma_upper])))
+        mu_1 = (mu_d + np.sqrt(gamma * (gamma + 1) * sigma_d**2 - gamma * mu_d**2)) / (gamma + 1)
+        mu_2 = (gamma * mu_d - np.sqrt(gamma * (gamma + 1) * sigma_d**2 - gamma * mu_d**2)) / (gamma * (gamma + 1))
+        lambda_1 = 1 / mu_1
+        lambda_2 = 1 / mu_2
+        return "Hypoexponential subnet", {"gamma": gamma, "lambda_1": lambda_1, "lambda_2": lambda_2, "mu_1": mu_1, "mu_2": mu_2}
+
+    # Check for hyperexponential subnet
+    if mu_d < sigma_d:
+        omega_1 = 2 * mu_d**2 / (mu_d**2 + sigma_d**2)
+        omega_2 = 1 - omega_1
+        rate_h = 2 * mu_d / (mu_d**2 + sigma_d**2)
+        return "Hyperexponential subnet", {"omega_1": omega_1, "omega_2": omega_2, "lambda_h": rate_h}
+
+    return "Unknown distribution", {}
+
+def process_csv_data(write_avg_file_path, write_std_file_path, output_file_path):
+    """
+    Processes Gekko performance data from CSV files, calculates phase-type distributions and parameters,
+    and saves the results into a CSV file.
+    
+    Parameters:
+    - write_avg_file_path (str): File path to the CSV file containing write average data.
+    - write_std_file_path (str): File path to the CSV file containing standard deviation data.
+    - output_file_path (str): File path to save the processed data.
+    """
+
+    # Load CSV data for write average
+    write_avg_data = pd.read_csv(write_avg_file_path, comment='!', skipinitialspace=True, sep=';')
+
+    # Load CSV data for standard deviation
+    write_std_data = pd.read_csv(write_std_file_path, comment='!', skipinitialspace=True, sep=';')
+
+    # Initialize an empty list to store DataFrames
+    result_list = []
+
+    # Extract column names from the first row
+    column_names = write_avg_data.columns.values
+
+    # Iterate over rows in the write_avg_data DataFrame
+    for index, row in write_avg_data.iterrows():
+        nodes = row.iloc[0]
+        object_sizes = column_names[1:]
+
+        # Clean the "Mean" column by extracting numeric values
+        mean_values = row.iloc[1:].apply(lambda x: float(re.search(r'\d+\.\d+|\d+', str(x)).group()) if pd.notnull(x) else np.nan)
+
+        # Check if the index is within the valid range for write_std_data
+        if index < len(write_std_data):
+            # Find the corresponding row in the write_std_data DataFrame
+            std_row = write_std_data.iloc[index, 1:].apply(lambda x: float(x) if pd.notnull(x) else np.nan)
+
+            # Initialize lists to store results and parameters
+            distribution_results = []
+            gamma_list = []
+            lambda_1_list = []
+            lambda_2_list = []
+            mu_1_list = []
+            mu_2_list = []
+            omega_1_list = []
+            omega_2_list = []
+            rate_h_list = []
+            sigma_d_list = []  
+
+            # Iterate over object sizes, mean values, and standard deviation values
+            for obj_size, mu_d, std_percent in zip_longest(object_sizes, mean_values, std_row, fillvalue=np.nan):
+                # Calculate absolute standard deviation
+                sigma_d = mu_d * abs(float(std_percent))
+                sigma_d_list.append(sigma_d)
+
+                # Apply the phase approximation function
+                result, params = phase_approximation(mu_d, sigma_d)
+
+                # Extract parameters for each distribution type
+                if result == "Erlang subnet":
+                    gamma_list.append(params.get("gamma", np.nan))
+                    lambda_1_list.append(params.get("lambda", np.nan))
+                    lambda_2_list.append(np.nan)
+                    mu_1_list.append(np.nan)
+                    mu_2_list.append(np.nan)
+                    omega_1_list.append(np.nan)
+                    omega_2_list.append(np.nan)
+                    rate_h_list.append(np.nan)
+                elif result == "Hypoexponential subnet":
+                    gamma_list.append(params.get("gamma", np.nan))
+                    lambda_1_list.append(params.get("lambda_1", np.nan))
+                    lambda_2_list.append(params.get("lambda_2", np.nan))
+                    mu_1_list.append(params.get("mu_1", np.nan))
+                    mu_2_list.append(params.get("mu_2", np.nan))
+                    omega_1_list.append(np.nan)
+                    omega_2_list.append(np.nan)
+                    rate_h_list.append(np.nan)
+                elif result == "Hyperexponential subnet":
+                    gamma_list.append(np.nan)
+                    lambda_1_list.append(np.nan)
+                    lambda_2_list.append(np.nan)
+                    mu_1_list.append(np.nan)
+                    mu_2_list.append(np.nan)
+                    omega_1_list.append(params.get("omega_1", np.nan))
+                    omega_2_list.append(params.get("omega_2", np.nan))
+                    rate_h_list.append(params.get("lambda_h", np.nan))
+                else:
+                    gamma_list.append(np.nan)
+                    lambda_1_list.append(np.nan)
+                    lambda_2_list.append(np.nan)
+                    mu_1_list.append(np.nan)
+                    mu_2_list.append(np.nan)
+                    omega_1_list.append(np.nan)
+                    omega_2_list.append(np.nan)
+                    rate_h_list.append(np.nan)
+
+                # Append the result to the list
+                distribution_results.append(result)
+
+            # Calculate the inverse of mean values
+            inverse_mean_values = mean_values.apply(lambda x: 1 / x if pd.notnull(x) and x != 0 else np.nan)
+
+            # Create a dictionary for each row
+            row_dict = {
+                "Nodes": [nodes] * len(object_sizes),
+                "Object Size": object_sizes.tolist(),
+                "Mean": mean_values.tolist(),
+                "Inverse Mean": inverse_mean_values.tolist(),  # Add the inverse mean values here
+                "Standard Deviation": std_row.tolist(),
+                "Sigma_d": sigma_d_list,  
+                "Distribution": distribution_results,
+                "Gamma": gamma_list,
+                "Lambda_1": lambda_1_list,
+                "Lambda_2": lambda_2_list,
+                "Mu_1": mu_1_list,
+                "Mu_2": mu_2_list,
+                "Omega_1": omega_1_list,
+                "Omega_2": omega_2_list,
+                "Rate_H": rate_h_list
+            }
+
+            # Append the dictionary to the list of DataFrames
+            result_list.append(pd.DataFrame(row_dict))
+        else:
+            print(f"Index {index} is out of bounds for write_std_data.")
+
+    # Check if there are DataFrames in the result_list before concatenating
+    if result_list:
+        # Concatenate the list of DataFrames
+        result_df = pd.concat(result_list, ignore_index=True)
+
+        # Save the results to a new CSV file
+        result_df.to_csv(output_file_path, index=False)
+
+        # Display the result DataFrame
+        print(result_df)
+    else:
+        print("No valid data to concatenate.")
+
+# Specify the file paths for GekkoSeq
+write_avg_file_path_gekko_seq = "ExperimentalResults/gekkofs_seq_fpp.csv"
+write_std_file_path_gekko_seq = "ExperimentalResults/gekkofs_seq_fpp_std.csv"
+output_file_path_gekko_seq = "ExperimentalResults/MomentMatchingGekkoSeq.csv"
+
+# Specify the file paths for GekkoRd
+write_avg_file_path_gekko_rd = "ExperimentalResults/gekkofs_rd_fpp.csv"
+write_std_file_path_gekko_rd = "ExperimentalResults/gekkofs_rd_fpp_std.csv"
+output_file_path_gekko_rd = "ExperimentalResults/MomentMatchingGekkoRd.csv"
+
+# Process GekkoSeq data
+process_csv_data(write_avg_file_path_gekko_seq, write_std_file_path_gekko_seq, output_file_path_gekko_seq)
+
+# Process GekkoRd data
+process_csv_data(write_avg_file_path_gekko_rd, write_std_file_path_gekko_rd, output_file_path_gekko_rd)
+
