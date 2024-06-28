@@ -257,38 +257,64 @@ This notebook provides an in-depth exploration of SSD failures across various ap
 This exploratory analysis provides insights into SSD failures across various dimensions including application, model, flash technology, capacity, and lithography. By understanding these factors, we can improve SSD reliability and optimize their usage in different environments.
 
 ### Comprehensive Analysis of SSD Failure Effects and Performability with Machine Learning
-This notebook provides a comprehensive analysis of SSD failures and performability using machine learning techniques.
+
+This notebook provides a comprehensive exploration of SSD failures and performability metrics across various applications, leveraging machine learning models to enhance the analysis. The objective is to understand the factors affecting SSD reliability and improve their usage in different environments.
 
 **Content**:
-1. **Understanding SSD Failures**:
-   - **Types of Failures**: Discussion on how SSDs fail differently from traditional HDDs.
-   - **Common Causes**:
-     - **Wear-Out**: Limited number of write/erase cycles.
-     - **Power Loss**: Sudden power failures can cause data corruption.
-     - **Firmware Bugs**: Issues within the drive’s firmware can lead to failures.
-     - **Temperature Extremes**: Both high and low temperatures can affect SSD performance and longevity.
-2. **Performability Analysis**:
-   - **Performability**: Combines performance and reliability of systems.
-   - **Dynamic Mean Time To Failure (MTTF)**: A critical metric that evolves over time considering various operational conditions and usage patterns.
-3. **Machine Learning in Failure Prediction**:
-   - **Predictive Models**: Machine learning algorithms can predict SSD failures by analyzing data patterns from various operational metrics.
-   - **Features Used**: Temperature, read/write error rates, power cycles, etc.
-   - **Algorithms**:
-     - **Random Forest Regressor**
-     - **XGBoost Regressor**
-     - **LSTM (Long Short-Term Memory) Networks**
-     - **Voting Regressor**
-   - **Data Collection and Processing**:
-     - **Data Acquisition**: Gathering data from SSD sensors and logs.
-     - **Preprocessing**: Cleaning and normalizing data for analysis.
-     - **Feature Engineering**: Creating relevant features that capture the essence of potential failure points.
-4. **Results and Case Studies**:
-   - Analysis of collected data shows significant patterns that can predict failures.
-   - Case studies demonstrate the effectiveness of machine learning models in extending the life of SSDs and preventing unexpected downtimes.
-   - **Datasets Used**: Various datasets collected from SSDs in different environments, detailing failure rates, operational conditions, and SMART attributes.
-5. **Proposed Models and Architecture**:
-   - Description of the architecture used in the predictive models.
-   - Comparison of different machine learning models and their performance metrics (e.g., Mean Absolute Error, Mean Squared Error, R2 Score).
+1. **Data Loading and Preprocessing**
+   - **Objective**: Load and preprocess the SSD datasets for analysis.
+   - **Approach**:
+     - Read the data from CSV files.
+     - Handle missing values and clean the data for further analysis.
+     - Encode categorical variables and normalize numerical features.
+
+2. **Exploratory Data Analysis (EDA)**
+   - **Objective**: Explore the dataset to understand the distribution and relationships of variables.
+   - **Approach**:
+     - Generate summary statistics and visualizations for key variables.
+     - Identify correlations and patterns in the data.
+     - Analyze the distribution of SSD failures across different applications.
+
+3. **Investigation of SSDs by Application**
+   - **Objective**: Analyze SSD failure rates and performability metrics based on the application in which they are used.
+   - **Approach**:
+     - Identify unique applications from the dataset.
+     - Calculate total SSDs, failed SSDs, AFR (Annualized Failure Rate), and MTTF (Mean Time To Failure) for each application.
+     - Differentiate between general SSDs and common SSDs across multiple datasets.
+
+4. **Investigation of AFR/MTTF and wear-related SMART attributes per SSD Model for Each Application**
+   - **Objective**: Assess the reliability of different SSD models within each application.
+   - **Approach**:
+     - Merge datasets to associate SSD models with failure data.
+     - Loop through each application and SSD model to calculate AFR and MTTF.
+     - Compile statistics to track the evolution of failures in SSDs and wear-related smart attributes (such as reallocated sectors count and wear leveling) in relation to the number of written blocks per application.
+
+5. **Machine Learning Model Development**
+   - **Objective**: Develop and validate machine learning models to predict SSD failures.
+   - **Approach**:
+     - Split the data into training and testing sets.
+     - Train various machine learning models, including Random Forest, LSTM, and XGBoost.
+     - Perform hyperparameter tuning to optimize model performance.
+     - Evaluate models using metrics such as accuracy, precision, recall, and F1-score.
+     - Select the best-performing model for further analysis.
+
+6. **Model Validation and Performance Evaluation**
+   - **Objective**: Validate the performance of the selected machine learning model.
+   - **Approach**:
+     - Perform cross-validation to ensure model robustness.
+     - Generate confusion matrices and ROC curves to assess model performance.
+     - Interpret model predictions and identify key features influencing SSD failures.
+
+7. **Performability Analysis**
+   - **Objective**: Analyze the performability of SSDs, considering both performance and reliability.
+   - **Approach**:
+     - Calculate metrics such reliability and performance (when impacted by failures).
+     - Compare performability metrics across different applications.
+     - Identify factors affecting SSD performability and suggest improvements.
+     - Optimization using the composite desirability statistical technique, considering performability, MTTF, and MTTR metrics, for a scenario involving LQCD and ECMWF applications, the Gekko file system, and 512 burst buffers.
+     
+**Summary**:
+This comprehensive analysis provides critical insights into SSD failures and performability across various dimensions. By leveraging machine learning models and performability analysis, we can enhance the reliability and performance of SSDs in different environments, ultimately improving the overall effectiveness of Burst Buffer systems.
 
 ### Utils
 
