@@ -1,39 +1,72 @@
 # Research Project: SSD Failure Effects and Performability with Machine Learning
 
 ## Table of Contents
-1. [Objective](#objective)
-2. [Description](#description)
-3. [Background Information](#background-information)
-4. [Process](#process)
+1. [Introduction](#introduction)
+2. [Objectives](#objectives)
+3. [Methodology](#methodology)
+4. [Datasets](#datasets)
+   - [SSDs](#ssds)
+   - [HDDs](#hdds)
+   - [Real Traces](#real-traces)
 5. [Repository Structure](#repository-structure)
 6. [Notebooks](#notebooks)
-   - [MongoDB Population for SSD and HDD data](#mongodb-population)
-   - [Data Processing and Exporting for HDD](#data-processing-and-exporting-for-hdd)   
+   - [MongoDB Population for SSD and HDD Data](#mongodb-population-for-ssd-and-hdd-data)
+   - [Data Processing and Exporting for HDD](#data-processing-and-exporting-for-hdd)
    - [Exploratory Analysis HDD](#exploratory-analysis-hdd)
    - [Exploratory Analysis SSD](#exploratory-analysis-ssd)
    - [Comprehensive Analysis of SSD Failure Effects and Performability with Machine Learning](#comprehensive-analysis-of-ssd-failure-effects-and-performability-with-machine-learning)
    - [Utils](#utils)
 7. [Installation and Execution](#installation-and-execution)
-8. [Publication](#scientific-paper)
-9. [Datasets](#datasets)
-   - [SSDs](#ssds)
-   - [HDDs](#hdds)
-10. [Funding](#funding)
+8. [Publication](#publication)
+9. [Funding](#funding)
 
-## Objective
-- Complete Exploratory Data Analysis.
-- Predict hard drive failure using additional SMART statistics.
+## Introduction
 
-## Description
-This repository contains Jupyter notebooks and a scientific paper on the analysis of SSD failures and performability using machine learning techniques. It also includes a comparative study of HDD data processing and exporting, and a guide on using MongoDB for storing and analyzing this data.
+High availability is crucial in High-Performance Computing (HPC) environments, where unexpected failures can constrain system performance. Solid-state drives (SSDs) are essential for data-intensive applications due to their high speed and are often used as dedicated or node-local burst buffers (BBs). However, the limited write endurance of SSDs, which varies with utilization, requires thorough investigation to prevent unforeseen failures that could jeopardize scientific computations.
 
-## Background Information
-Data is an integral component of our society. From the simple caloric deficits collected in your Apple Watch to the user history in your Netflix account, data is used in a myriad of applications. With such an abundance of data being used daily, how is it stored? The solution is computer backup or cloud storage services. Furthermore, Backblaze is a world leader in computer backup and storage. Since 2013, Backblaze has published statistics and insights based on the hard drives in their data center. In this study, we’ll explore various features in a hard drive dataset to predict hard drive failure.
+In this study, we propose a hierarchical modeling approach to evaluate the reliability and performability of BBs. We developed a model powered by machine-learning algorithms to dynamically predict storage failures based on wear caused by different applications. Two models, based on generalized stochastic Petri nets (GSPNs) and reliability block diagrams (RBDs), were created to represent and evaluate BBs. Additionally, we conducted an exploratory study using a representative dataset to analyze the impact of workload on SSD failures. Benchmarks from the MOGON II supercomputer demonstrate the feasibility of our approach. This project is developed within the [IO-SEA project](https://iosea-project.eu) for Exascale Storage I/O and Data Management.
 
-## Process
-- Exploratory Data Analysis conducted utilizing various python packages (Numpy, Matplotlib, Pandas, and Plotly).
-- Binary Classification Algorithms (Sci-Kit Learn):
-  - Logistic Regression
+Within this repository, you'll find Jupyter notebooks dedicated to analyzing SSD failures and performance using advanced machine learning techniques. It also includes a comprehensive exploration into the evolution of intrinsic wear-related characteristics and failures in HDDs, conducted through detailed exploratory data analysis based on their utilization (number of written blocks). Moreover, the repository offers a practical guide on harnessing MongoDB to efficiently store and analyze large, cleaned datasets, thereby enhancing data access performance.
+
+## Objectives
+
+- Performed an explanatory analysis of an industry dataset from Alibaba to investigate the impact of workloads on SSD failures. We aim to understand the distinct effects that workloads may have on these storage technologies.
+- Formulated two analytical models based on the mathematical formalisms RBD (reliability block diagrams) and GSPN (generalized stochastic Petri nets) to evaluate the reliability and performability of burst buffer systems. These models enabled us to represent the respective nodes composing such systems and also estimate system mean time to failure, reliability and throughput.
+- Conceived a model called Dynamic Mean Time to Failure (DMTTF) for dynamically estimating SSD failures by using machine-learning algorithms. The DMTTF model is based on an evaluation of wear progress, which considers the number of written blocks on a storage device at a given time, along with aging-related internal sensor values.
+- Carried out a reliability and performability study adopting our proposed DMTTF, RBD, and GSPN models. Experiments were performed based on HPC applications (LQCD and ECMWF) to demonstrate the feasibility of the proposed approach utilizing the MOGON II supercomputer and GekkoFS benchmarks.
+- Conducted exploratory data analysis using SMART statistics and failure logs from a Backblaze dataset to evaluate the evolution of HDD failures and failure-related attributes in relation to device usage, particularly the number of written blocks.
+
+## Methodology
+
+#### Proposed Method
+
+This section summarizes our methodology for modeling and evaluating burst buffer (BB) systems in high-performance computing environments, considering the unique characteristics of different applications.
+
+#### Modeling Burst Buffer Systems
+
+We aim to estimate BB systems' dependability and performability. The methodology involves several key steps: 
+
+1. **Input**: The system architecture description, including the BB layer and dependability relationships, allows the creation of abstract models. This step involves collecting SSD SMART values related to wear and the number of blocks written by applications to predict SSD failures accurately.
+
+2. **Machine Learning Model**: We utilize a machine learning-based dynamic mean time-to-failure (DMTTF) model to predict SSD failures. This model analyzes the SMART attributes and workload characteristics to dynamically estimate failure rates, which are crucial for accurate reliability and performability assessments.
+
+3. **Modeling**: We design and refine GSPN and RBD models to represent the system. The machine learning model's predictions are integrated into these models to reflect real-world performance and failure metrics. This step includes creating abstract models and tuning them to align with observed data.
+
+4. **Evaluation**: The models are evaluated and refined based on experimental results. We compute the reliability and performability models to predict BB failures and analyze system performance under failure conditions.
+
+#### Hierarchical Modeling
+
+Our hierarchical modeling approach investigates BB failures' impact on performance. The system architecture is presented generically, applicable to both single nodes and pools of BB nodes.
+
+1. **Input**: SMART values and workload characteristics essential for DMTTF learning and failure prediction.
+
+2. **MTTF Prediction**: The machine learning model calculates the annual failure rate (AFR) and MTTF, which are used as parameters in the reliability model.
+
+3. **Dependability Evaluation**: Calculate the MTTF and mean time to repair (MTTR) for the entire system, considering BB dependability without redundancy mechanisms.
+
+4. **Performability Evaluation**: Assign MTTF and MTTR to transitions in the GSPN model to estimate system performance under failure conditions.
+
+By following this methodology, valuable insights for data-driven decision-making can be obtained, improving BB system performance and preventing failures through proactive measures.
 
 # Datasets
 
@@ -69,6 +102,9 @@ This dataset contains information regarding HDDs from a Backblaze data center, i
 
 **Link for the datasets:** [Backblaze HDD Data](https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data#downloadingTheRawTestData)
 
+## Real traces
+
+Lattice quantum-chromodynamics (LQCD) and European Centre for Medium-Range Weather Forecasts (ECMWF). The former, LQCD, is a prescription for understanding how quarks and gluons interact to give rise to the properties of composite particles such as protons, neutrons, and mesons. The latter comprises a time-critical global numerical weather forecast. We only considered write requests, as these are the focus of this study.
 
 ## Repository Structure
 - `notebooks/`: Contains the Jupyter notebooks used in the analysis.
@@ -347,14 +383,6 @@ This notebook provides a detailed analysis of system reliability metrics using R
 **Summary**:
 This notebook conducts detailed calculations of system reliability metrics using RBD analysis and approximates GekkoFS delay distributions using phase-type distributions based on moment matching. These methods provide deep insights into system reliability metrics and GekkoFS delay patterns, offering valuable insights to enhance system reliability and performance.
 
-## Publication
-A scientific paper based on the results from the notebooks was authored by Eric Borba, Reza Salkhordeh, Salim Mimouni, Eduardo Tavares, Paulo Maciel, Hossein Asadi, and André Brinkmann. It was published in the Proceedings of the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS), held in Potsdam, Germany, from May 14th to 16th, 2024.
-
-- **Title**: A Hierarchical Modeling Approach for Assessing the Reliability and Performability of Burst Buffers
-- **Abstract**: High availability is a crucial aspect of High-Performance Computing. Solid-state drives (SSD) offer peak bandwidth as node-local burst buffers. The limited write endurance of SSDs requires thorough investigation to ensure computational reliability. We propose a hierarchical model to evaluate the reliability and performability of burst buffers. We developed a machine-learning model to dynamically predict storage failures according to the wear caused by different applications. We also conducted an exploratory study to analyze the workload effects on SSD failures, and a representative dataset was adopted.
-- **Presentation**:
-The paper was presented by Eric Borba at the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS).
-
 ## Installation and Execution
 
 1. **Clone this repository**:
@@ -371,6 +399,14 @@ The paper was presented by Eric Borba at the 37th GI/IT International Conference
     ```
     jupyter notebook
     ```
+
+## Publication
+A scientific paper based on the results from the notebooks was authored by Eric Borba, Reza Salkhordeh, Salim Mimouni, Eduardo Tavares, Paulo Maciel, Hossein Asadi, and André Brinkmann. It was published in the Proceedings of the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS), held in Potsdam, Germany, from May 14th to 16th, 2024.
+
+- **Title**: A Hierarchical Modeling Approach for Assessing the Reliability and Performability of Burst Buffers
+- **Abstract**: High availability is a crucial aspect of High-Performance Computing. Solid-state drives (SSD) offer peak bandwidth as node-local burst buffers. The limited write endurance of SSDs requires thorough investigation to ensure computational reliability. We propose a hierarchical model to evaluate the reliability and performability of burst buffers. We developed a machine-learning model to dynamically predict storage failures according to the wear caused by different applications. We also conducted an exploratory study to analyze the workload effects on SSD failures, and a representative dataset was adopted.
+- **Presentation**:
+The paper was presented by Eric Borba at the 37th GI/IT International Conference on Architecture of Computing Systems (ARCS).
 
 ## Fundings
 
