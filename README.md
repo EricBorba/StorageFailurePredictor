@@ -1,4 +1,4 @@
-# Research Project: SSD Failure Effects and Performability with Machine Learning
+# Investigating SSD Reliability and Performance in High-Performance Computing: Analytical Modeling, Machine Learning, and Exploratory Data Analysis
 
 ## Table of Contents
 1. [Introduction](#introduction)
