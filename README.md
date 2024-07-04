@@ -330,16 +330,15 @@ This notebook provides a comprehensive exploration of SSD failures and performab
    - **Approach**:
      - Split the data into training and testing sets.
      - Train various machine learning models, including Random Forest, LSTM, and XGBoost.
-     - Perform hyperparameter tuning to optimize model performance.
-     - Evaluate models using metrics such as accuracy, precision, recall, and F1-score.
-     - Select the best-performing model for further analysis.
+     - Perform hyperparameter tuning to optimize model performance.     
 
 6. **Model Validation and Performance Evaluation**
    - **Objective**: Validate the performance of the selected machine learning model.
    - **Approach**:
      - Perform cross-validation to ensure model robustness.
-     - Generate confusion matrices and ROC curves to assess model performance.
+     - Evaluate models using statistical measures: mean absolute error, mean squared error, and r-squared
      - Interpret model predictions and identify key features influencing SSD failures.
+     - Select the best-performing model for further analysis.
 
 7. **Performability Analysis**
    - **Objective**: Analyze the performability of SSDs, considering both performance and reliability.
