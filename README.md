@@ -1,4 +1,4 @@
-# Investigating SSD Reliability and Performance in High-Performance Computing: Analytical Modeling, Machine Learning, and Exploratory Data Analysis
+# Investigating SSD Reliability and Performability in High-Performance Computing: Analytical Modeling, Machine Learning, and Exploratory Data Analysis
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -135,7 +135,7 @@ This notebook demonstrates setting up MongoDB and populating SSD and HDD data in
 3. **MongoDB Operations and Data Management**:
    - **Database Creation and Collection Management**:
      - **Objective**: Create MongoDB database and manage collections.
-     - **Approach**: Use `use mydb` to create and switch to a database named `mydb`. Create collections using `db.createCollection`. View existing collections with `show collections`.
+     - **Approach**: Create collections using `db.createCollection`. View existing collections with `show collections`.
    
    - **Data Loading Using mongoimport**:
      - **Objective**: Load data into MongoDB from a JSON file.
@@ -163,27 +163,27 @@ This notebook demonstrates setting up MongoDB and populating SSD and HDD data in
 
 ### Summary
 
-This section outlines the setup of MongoDB for handling SSD and HDD data, including data population, basic operations, querying, and performance optimization strategies. These steps are crucial for effectively managing and analyzing large datasets in MongoDB.
+This notebook outlines the setup of MongoDB for handling SSD and HDD data, including data population, basic operations, querying, and performance optimization strategies. These steps are crucial for effectively managing and analyzing large datasets in MongoDB.
 
 ### Data Processing and Exporting for HDD
-This notebook addresses HDD data processing and export methods.
+This notebook focuses on methods for processing and exporting HDD data.
 
 **Content**:
-1. **HDD Data Characteristics**:
-   - **Different Failure Mechanisms**: Comparison between HDD and SSD failures.
-   - **Key Factors**:
-     - **Mechanical Wear**: Moving parts are prone to wear and tear.
-     - **Environmental Factors**: Vibration, temperature, and humidity can impact HDD reliability.
+1. **Extracting HDD Metrics**:
+   - **Key Metrics**: Extraction of critical metrics such as failure rates, reallocated sectors, uncorrectable errors, number of blocks written, command timeouts, uncorrectable sector count, current pending sector, and timestamps from specific HDD models stored in a MongoDB database.
+
 2. **Data Processing Techniques**:
-   - **Data Cleaning**: Removing noise and irrelevant data points.
-   - **Normalization**: Scaling data to ensure consistency in analysis.
-   - **Feature Selection**: Identifying important metrics like spindle speed, seek errors, and reallocated sectors.
+   - **Data Cleaning**: Removing noise and irrelevant data points for clarity.
+   - **Normalization**: Scaling data to ensure consistency across analyses.
+   - **Feature Selection**: Identifying and selecting important metrics for further analysis.
+
 3. **Data Export Methods**:
-   - **Efficient Data Export**: Methods that ensure seamless integration with analytical tools.
-   - **Common Formats**: CSV, JSON, and database entries (e.g., MongoDB).
+   - **Efficient Data Export**: Techniques for seamless integration with analytical tools.
+   - **Common Formats**: Exporting data into CSV files for subsequent exploratory analysis.
+
 4. **Tools and Frameworks**:
-   - **Python Libraries**: Utilization of pandas for data manipulation.
-   - **MongoDB**: Storing and querying large datasets efficiently.
+   - **Python Libraries**: Utilizing pandas for robust data manipulation.
+   - **MongoDB**: Efficiently storing and querying large datasets.
 
 ### Exploratory Analysis HDD
 
@@ -238,7 +238,7 @@ This notebook provides a detailed exploration of HDD failures across various dim
 This exploratory analysis offers comprehensive insights into HDD failures, focusing on various metrics and their relationship with the number of blocks written. By understanding these factors, we can improve HDD reliability and optimize their usage in different environments.
 
 ### Exploratory Analysis SSD
-This notebook provides an in-depth exploration of SSD failures across various applications, analyzing failure rates and performability metrics such as AFR (Annualized Failure Rate) and MTTF (Mean Time To Failure).
+This notebook provides an in-depth exploration of SSD failures across various applications, analyzing failure rates such as AFR (Annualized Failure Rate) and MTTF (Mean Time To Failure) in relation to SSD characteristics.
 
 **Content**:
 1. **Investigation of SSDs by Application**
@@ -294,7 +294,7 @@ This exploratory analysis provides insights into SSD failures across various dim
 
 ### Comprehensive Analysis of SSD Failure Effects and Performability with Machine Learning
 
-This notebook provides a comprehensive exploration of SSD failures and performability metrics across various applications, leveraging machine learning models to enhance the analysis. The objective is to understand the factors affecting SSD reliability and improve their usage in different environments.
+This notebook provides a comprehensive exploration of SSD failures and performability metrics across various applications, leveraging machine learning models to enhance the analysis. The objective is to understand the factors affecting SSD reliability and improve their usage in burst buffer tiers within the high-performance computing field.
 
 **Content**:
 1. **Data Loading and Preprocessing**
@@ -321,7 +321,7 @@ This notebook provides a comprehensive exploration of SSD failures and performab
 4. **Investigation of AFR/MTTF and wear-related SMART attributes per SSD Model for Each Application**
    - **Objective**: Assess the reliability of different SSD models within each application.
    - **Approach**:
-     - Merge datasets to associate SSD models with failure data.
+     - Merge datasets to associate SSD models with failure logs.
      - Loop through each application and SSD model to calculate AFR and MTTF.
      - Compile statistics to track the evolution of failures in SSDs and wear-related smart attributes (such as reallocated sectors count and wear leveling) in relation to the number of written blocks per application.
 
@@ -353,7 +353,7 @@ This comprehensive analysis provides critical insights into SSD failures and per
 
 ### Utils
 
-This notebook provides a detailed analysis of system reliability metrics using Reliability Block Diagram (RBD) analysis and approximation of delay distributions for GekkoFS using phase-type distributions.
+This notebook offers utility functions to assist in calculating system reliability metrics using Reliability Block Diagram (RBD) analysis and in approximating delay distributions with phase-type distributions.
 
 **Content**:
 
