@@ -70,9 +70,10 @@ By following this methodology, valuable insights for data-driven decision-making
 
 ## Datasets
 
-### SSDs
+### SSDs (Solid-state drives)
 
-#### Solid-state drives (SSDs)
+1. **Alibaba SSD Dataset: Detailed Insights Including Applications**:
+
 Directory: `ssd_open_data/`
 
 This dataset includes nearly one million SSDs of 11 drive models from three vendors over a two-year span (January 2018 to December 2019). It is based on a dataset of SMART logs, trouble tickets, locations, and applications at Alibaba.
@@ -82,7 +83,7 @@ This dataset includes nearly one million SSDs of 11 drive models from three vend
 Shujie Han, Patrick P. C. Lee, Fan Xu, Yi Liu, Cheng He, and Jiongzhou Liu.  
 Proceedings of the 19th USENIX Conference on File and Storage Technologies (FAST 2021), February 2021.
 
-#### SMART logs of Solid-state drives (SSDs)
+2. **Daily Evolution of SMART Logs for Solid-State Drives**:
 Directory: `ssd_smart_logs/`
 
 This dataset includes nearly 500K SSDs of six drive models from three vendors over a two-year span. It contains daily SMART data and failures of six different SSD models ranging from January 1, 2018, to December 31, 2019.
@@ -96,7 +97,7 @@ For each drive model, the serial number for an SSD in both datasets is identical
 
 **Link for the datasets:** [Alibaba SSD Datasets](https://github.com/alibaba-edu/dcbrain/blob/master/README.md)
 
-### HDDs
+### HDDs (Hard disk drives)
 
 This dataset contains information regarding HDDs from a Backblaze data center, including 231,309 HDDs from four manufacturers and 29 models. Backblaze has been monitoring these devices for eight years, during which 2,963 failures have occurred.
 
