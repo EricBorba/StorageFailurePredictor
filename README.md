@@ -42,7 +42,7 @@ Within this repository, you'll find Jupyter notebooks dedicated to analyzing SSD
 
 This section summarizes our methodology for modeling and evaluating burst buffer (BB) systems in high-performance computing environments, considering the unique characteristics of different applications.
 
-#### Modeling Burst Buffer Systems
+### Modeling Burst Buffer Systems
 
 We aim to estimate BB systems' dependability and performability. The methodology involves several key steps: 
 
@@ -54,7 +54,7 @@ We aim to estimate BB systems' dependability and performability. The methodology
 
 4. **Evaluation**: The models are evaluated and refined based on experimental results. We compute the reliability and performability models to predict BB failures and analyze system performance under failure conditions.
 
-#### Hierarchical Modeling
+### Hierarchical Modeling
 
 Our hierarchical modeling approach investigates BB failures' impact on performance. The system architecture is presented generically, applicable to both single nodes and pools of BB nodes.
 
@@ -83,7 +83,9 @@ This dataset includes nearly one million SSDs of 11 drive models from three vend
 Shujie Han, Patrick P. C. Lee, Fan Xu, Yi Liu, Cheng He, and Jiongzhou Liu.  
 Proceedings of the 19th USENIX Conference on File and Storage Technologies (FAST 2021), February 2021.
 
+
 2. **Daily Evolution of SMART Logs for Solid-State Drives**:
+
 Directory: `ssd_smart_logs/`
 
 This dataset includes nearly 500K SSDs of six drive models from three vendors over a two-year span. It contains daily SMART data and failures of six different SSD models ranging from January 1, 2018, to December 31, 2019.
