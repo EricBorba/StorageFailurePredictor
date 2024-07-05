@@ -68,11 +68,11 @@ Our hierarchical modeling approach investigates BB failures' impact on performan
 
 By following this methodology, valuable insights for data-driven decision-making can be obtained, improving BB system performance and preventing failures through proactive measures.
 
-# Datasets
+## Datasets
 
-## SSDs
+### SSDs
 
-### Solid-state drives (SSDs)
+#### Solid-state drives (SSDs)
 Directory: `ssd_open_data/`
 
 This dataset includes nearly one million SSDs of 11 drive models from three vendors over a two-year span (January 2018 to December 2019). It is based on a dataset of SMART logs, trouble tickets, locations, and applications at Alibaba.
@@ -82,7 +82,7 @@ This dataset includes nearly one million SSDs of 11 drive models from three vend
 Shujie Han, Patrick P. C. Lee, Fan Xu, Yi Liu, Cheng He, and Jiongzhou Liu.  
 Proceedings of the 19th USENIX Conference on File and Storage Technologies (FAST 2021), February 2021.
 
-### SMART logs of Solid-state drives (SSDs)
+#### SMART logs of Solid-state drives (SSDs)
 Directory: `ssd_smart_logs/`
 
 This dataset includes nearly 500K SSDs of six drive models from three vendors over a two-year span. It contains daily SMART data and failures of six different SSD models ranging from January 1, 2018, to December 31, 2019.
@@ -96,13 +96,13 @@ For each drive model, the serial number for an SSD in both datasets is identical
 
 **Link for the datasets:** [Alibaba SSD Datasets](https://github.com/alibaba-edu/dcbrain/blob/master/README.md)
 
-## HDDs
+### HDDs
 
 This dataset contains information regarding HDDs from a Backblaze data center, including 231,309 HDDs from four manufacturers and 29 models. Backblaze has been monitoring these devices for eight years, during which 2,963 failures have occurred.
 
 **Link for the datasets:** [Backblaze HDD Data](https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data#downloadingTheRawTestData)
 
-## Real traces
+### Real traces
 
 Lattice quantum-chromodynamics (LQCD) and European Centre for Medium-Range Weather Forecasts (ECMWF). The former, LQCD, is a prescription for understanding how quarks and gluons interact to give rise to the properties of composite particles such as protons, neutrons, and mesons. The latter comprises a time-critical global numerical weather forecast. We only considered write requests, as these are the focus of this study.
 
